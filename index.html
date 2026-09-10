@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Khuyến cáo năm 2026 của ESC về quản lý bệnh suy tim — Medical Library</title>
+<title>Hướng dẫn năm 2026 của ESC về quản lý bệnh suy tim — Medical Library</title>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
@@ -253,12 +253,14 @@ html[data-theme="dark"] #tocList a{
 
 .reader-main{
   min-width:0;
+  align-self:start;
 }
 
 .reader-hero{
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:100;
+  align-self:flex-start;
 
   /* Luôn để Hero lấy đúng chiều cao nội dung, không bị stretch */
   height:auto;
@@ -279,6 +281,30 @@ html[data-theme="dark"] #tocList a{
   box-shadow:0 12px 28px rgba(20,30,40,.10);
 
   isolation:isolate;
+}
+
+/* ===== GIỮ BOX GUIDELINE CỐ ĐỊNH KHI CUỘN ===== */
+@media(min-width:981px){
+  .reader-main{
+    align-self:start;
+  }
+
+  /* Sticky phải đặt trên lớp vỏ ngoài, vì mobile-sticky-shell
+     là parent của hero. Khi hero tự sticky bên trong parent có
+     chiều cao chỉ bằng hero, nó sẽ không thể bám xuyên suốt tài liệu. */
+  .mobile-sticky-shell{
+    position:sticky !important;
+    top:0 !important;
+    z-index:100 !important;
+    align-self:flex-start !important;
+    width:100%;
+  }
+
+  .reader-hero{
+    position:relative !important;
+    top:auto !important;
+    z-index:1 !important;
+  }
 }
 
 .reader-hero::after{
@@ -1480,7 +1506,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
     }
 
     @bottom-center{
-      content:"Link đọc bài viết: https://huberton176.github.io/esh2026hf/";
+      content:"Link đọc bài viết: https://example.com";
       background:#e3e3e3;
       color:#111;
       font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
@@ -1684,7 +1710,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
     <div class="mobile-sticky-shell">
       <section class="reader-hero" id="readerHero">
         <p class="kicker">GUIDELINE</p>
-    <h1 style="color: #b30000; font-size: 30px;">
+    <h1 style="color: #b30000; font-size: 25px;">
             Khuyến cáo ESC 2026 về quản lý bệnh suy tim
         </h1>
         <p>Biên dịch: <strong style="color: #0066cc;">BS. TRẦN THANH HOÀNG LINH</strong></p>
@@ -1696,7 +1722,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
                 <path fill="currentColor" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.923v-8.432H7.078v-3.491h3.047V9.413c0-3.017 1.792-4.689 4.533-4.689 1.312 0 2.686.235 2.686.235v2.973h-1.514c-1.491 0-1.955.93-1.955 1.885v2.261h3.328l-.532 3.491h-2.796v8.432C19.612 23.079 24 18.092 24 12.073z"/>
               </svg>
             </span>
-            <a href="https://www.facebook.com/profile.php?id=61578946288639/" target="_blank" rel="noopener noreferrer">Hoàng Linh</a>
+            <a href="https://www.facebook.com/profile.php?id=61578946288639" target="_blank" rel="noopener noreferrer">Hoàng Linh</a>
           </div>
 
           <div class="hero-contact-item">
@@ -1711,7 +1737,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
 
         <div class="hero-reading-link">
           <span class="hero-reading-link-label">Link bài đọc:</span>
-          <a href="https://huberton176.github.io/esh2026hf/" target="_blank" rel="noopener noreferrer">https://huberton176.github.io/esh2026hf/</a>
+          <a href="https://example.com" target="_blank" rel="noopener noreferrer">https://example.com</a>
         </div>
       </section>
 
@@ -6239,7 +6265,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   </div>
   <div class="print-layout-center">
     <span>Link bài đọc:</span>
-    <a href="https://huberton176.github.io/esh2026hf/">https://huberton176.github.io/esh2026hf/</a>
+    <a href="https://example.com">https://example.com</a>
   </div>
   <div class="print-layout-right">
     <svg class="print-contact-icon mail-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -6258,7 +6284,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   </div>
   <div class="print-layout-center">
     <span>Link bài đọc:</span>
-    <a href="https://huberton176.github.io/esh2026hf/">https://huberton176.github.io/esh2026hf/</a>
+    <a href="https://example.com">https://example.com</a>
   </div>
   <div class="print-layout-right">
     <svg class="print-contact-icon mail-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
