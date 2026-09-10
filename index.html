@@ -2,7 +2,7 @@
 <html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hướng dẫn năm 2026 của ESC về quản lý bệnh suy tim — Medical Library</title>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -11,6 +11,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root{
+  --font-scale: 1;
   --brand:#b30000;
   --brand-dark:#860000;
   --brand-soft:#fbecec;
@@ -41,7 +42,6 @@
   --document-border:#ddd;
 
   --sidebar-width:286px;
-  --document-width:920px;
   --content-gap:28px;
 
   /* ===== CỠ CHỮ CHUẨN TOÀN CỤC ===== */
@@ -51,7 +51,6 @@
 
   --radius:16px;
   --shadow:0 8px 28px rgba(20,30,40,.07);
-  --hero-height:290px;
 }
 
 html[data-theme="dark"]{
@@ -87,6 +86,15 @@ body{
   line-height:var(--line-height);
 }
 
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+body{
+  min-width:0;
+}
+
 button,
 select{
   font:inherit;
@@ -109,7 +117,8 @@ select:focus-visible{
   grid-template-columns:var(--sidebar-width) minmax(0,1fr);
   gap:var(--content-gap);
   align-items:start;
-  width:min(100% - 40px,1320px);
+  width:calc(100% - 40px);
+  max-width:1320px;
   margin:0 auto;
   padding:24px 0 70px;
 }
@@ -125,6 +134,8 @@ select:focus-visible{
 
   height:calc(100vh - 48px);
   max-height:calc(100vh - 48px);
+  height:calc(100dvh - 48px);
+  max-height:calc(100dvh - 48px);
 
   overflow-y:auto;
   overflow-x:hidden;
@@ -249,6 +260,13 @@ html[data-theme="dark"] #tocList a{
   top:0;
   z-index:50;
 
+  /* Luôn để Hero lấy đúng chiều cao nội dung, không bị stretch */
+  height:auto;
+  min-height:0;
+  max-height:none;
+  align-self:flex-start;
+  overflow:visible;
+
   width:100%;
   margin-bottom:18px;
   padding:28px 34px;
@@ -304,6 +322,122 @@ html[data-theme="dark"] #tocList a{
   font-size:13px;
 }
 
+/* =========================================================
+   HERO – LINK BÀI ĐỌC / LIÊN HỆ
+   ========================================================= */
+
+/* Facebook + Mail: luôn nằm trên cùng một dòng */
+.reader-hero .hero-contact{
+  display:flex;
+  align-items:center;
+  flex-wrap:nowrap;
+  gap:18px;
+  margin-top:10px;
+  min-width:0;
+}
+
+.reader-hero .hero-contact-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  flex:0 0 auto;
+  color:var(--text-secondary);
+  font-size:13px;
+  line-height:1.5;
+  white-space:nowrap;
+}
+
+.reader-hero .hero-contact-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 16px;
+  width:16px;
+  min-width:16px;
+  color:var(--muted);
+}
+
+.reader-hero .contact-icon{
+  width:16px;
+  height:16px;
+  display:block;
+  flex:0 0 16px;
+}
+
+.reader-hero .facebook-icon{
+  color:#1877f2;
+}
+
+.reader-hero .mail-icon{
+  color:var(--blue-light);
+}
+
+.reader-hero .hero-contact a,
+.reader-hero .hero-reading-link a{
+  min-width:0;
+  color:#000;
+  font-weight:700;
+  text-decoration:none;
+  text-underline-offset:2px;
+}
+
+.reader-hero .hero-contact a:hover,
+.reader-hero .hero-reading-link a:hover{
+  color:#000;
+  text-decoration:underline;
+}
+
+/* Link bài đọc đặt riêng dưới hàng liên hệ */
+.reader-hero .hero-reading-link{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid var(--border);
+  min-width:0;
+  color:#000;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.reader-hero .hero-reading-link-label{
+  flex:0 0 auto;
+  font-weight:800;
+}
+
+.reader-hero .hero-reading-link a{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+@media(max-width:640px){
+  .reader-hero .hero-contact{
+    gap:14px;
+    margin-top:9px;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .reader-hero .hero-contact::-webkit-scrollbar{
+    display:none;
+  }
+
+  .reader-hero .hero-contact-item{
+    font-size:12.5px;
+  }
+
+  .reader-hero .hero-reading-link{
+    margin-top:8px;
+    padding-top:8px;
+    font-size:12.5px;
+  }
+}
+
 .hero-meta{
   display:flex;
   flex-wrap:wrap;
@@ -345,11 +479,16 @@ html[data-theme="dark"] #tocList a{
 
   padding:28px 30px 55px;
 
-  font-size:var(--body-size);
+  font-size:calc(var(--body-size) * var(--font-scale));
+  text-justify:inter-word;
+  hyphens:auto;
+  -webkit-hyphens:auto;
+
   line-height:var(--line-height);
 
   color:var(--text);
 
+  /* Mặc định mọi nội dung văn bản là căn đều hai bên; thành phần có quy định riêng sẽ override */
   text-align:justify;
   overflow-wrap:break-word;
 }
@@ -367,6 +506,17 @@ html[data-theme="dark"] #tocList a{
 .document-surface th{
   color:var(--text);
 }
+
+/* Căn đều mặc định cho nội dung văn bản, trừ các thành phần có quy định căn lề riêng */
+.document-surface p,
+.document-surface li,
+.document-surface dt,
+.document-surface dd,
+.document-surface td,
+.document-surface th{
+  text-align:justify;
+}
+
 
 .document-surface p{
   margin:0 0 1rem;
@@ -536,8 +686,9 @@ html[data-theme="dark"] #tocList a{
   -webkit-overflow-scrolling:touch;
 }
 
-.document-surface table{
+ .document-surface table{
   width:100%;
+  min-width:100%;
 
   border-collapse:collapse;
   border-spacing:0;
@@ -564,7 +715,7 @@ html[data-theme="dark"] #tocList a{
 
   border:1px solid var(--document-border);
 
-  text-align:justify;
+  text-align:left;
   vertical-align:top;
 }
 
@@ -1020,6 +1171,11 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
    RESPONSIVE / MEDIA QUERIES
    ========================================================= */
 
+.mobile-sticky-shell{
+  width:100%;
+  min-width:0;
+}
+
 .mobile-toc{
   display:none;
 }
@@ -1027,11 +1183,13 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
 @media(max-width:980px){
   :root{
     --sidebar-width:0px;
+    --body-size:15.5px;
   }
 
   .reader-layout{
     display:block;
-    width:min(100% - 20px,1320px);
+    width:calc(100% - 20px);
+    max-width:1320px;
     padding-top:10px;
   }
 
@@ -1059,9 +1217,11 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   }
 
   .mobile-toc select{
-    flex:1;
+    flex:1 1 auto;
     min-width:0;
-    height:36px;
+    max-width:100%;
+    min-height:44px;
+    height:44px;
     padding:0 8px;
     border:1px solid var(--border);
     border-radius:8px;
@@ -1069,32 +1229,77 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
     color:var(--text);
   }
 
-  .reader-hero{
+  /* Hero + Mục lục cố định cùng nhau trên mobile/tablet */
+  .mobile-sticky-shell{
+    position:sticky;
     top:0;
+    z-index:60;
+    width:100%;
+    padding-top:10px;
+    background:var(--page-bg);
+  }
+
+  .reader-hero{
+    position:relative;
+    top:auto;
+    z-index:1;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
     padding:20px;
+    margin:0 0 14px;
+    box-shadow:var(--shadow);
   }
 
   .reader-hero h1{
-    font-size:28px;
+    font-size:24px;
   }
 
   .document-surface article{
-    padding:18px 18px 40px;
+    padding:20px 18px 40px;
   }
 }
 
 @media(max-width:640px){
+  :root{
+    --body-size:15px;
+    --paragraph-indent:0;
+    --line-height:1.6;
+  }
+
   .reader-layout{
-    width:calc(100% - 14px);
+    width:calc(100% - 16px);
+    padding-left:max(0px, env(safe-area-inset-left));
+    padding-right:max(0px, env(safe-area-inset-right));
+  }
+
+  .mobile-sticky-shell{
+    padding-top:8px;
   }
 
   .reader-hero{
-    padding:18px 16px;
+    height:auto !important;
+    min-height:0 !important;
+    padding:16px 14px;
     border-radius:12px;
   }
 
   .reader-hero h1{
-    font-size:25px;
+    font-size:21px;
+    line-height:1.25;
+  }
+
+  .reader-hero p{
+    font-size:12.5px;
+  }
+
+  .hero-meta{
+    gap:6px;
+    margin-top:12px;
+  }
+
+  .hero-meta span{
+    font-size:9.5px;
   }
 
   .document-surface{
@@ -1102,27 +1307,64 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   }
 
   .document-surface article{
-    padding:15px 14px 35px;
+    padding:16px 14px 35px;
+    text-align:justify;
+    min-width:0;
   }
 
-  .document-surface h1{
-    font-size:1.65em;
+  .document-surface a,
+  .document-surface td,
+  .document-surface th{
+    overflow-wrap:anywhere;
   }
 
-  .document-surface h2{
-    font-size:1.4em;
-  }
+  .document-surface h1{ font-size:1.45em; margin:1.4rem 0 .8rem; }
+  .document-surface h2{ font-size:1.3em; margin:1.3em 0 .6em; }
+  .document-surface h3{ font-size:1.15em; margin:1.1em 0 .5em; }
+  .document-surface h4{ font-size:1.05em; margin:1em 0 .4em; }
+  .document-surface h5{ font-size:.95em; }
 
-  .document-surface h3{
-    font-size:1.2em;
-  }
-
-  .document-surface h4{
-    font-size:1.1em;
+  .document-surface h1,
+  .document-surface h2,
+  .document-surface h3,
+  .document-surface h4,
+  .document-surface h5{
+    scroll-margin-top:12px;
   }
 
   .document-surface article>p{
-    text-indent:1.15rem;
+    text-indent:0;
+  }
+
+  .document-surface table{
+    font-size:13.5px;
+  }
+
+  /* Fallback for wide tables. Prefer .table-wrapper when authoring tables. */
+  .document-surface .table-wrapper{
+    max-width:100%;
+    touch-action:pan-x;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+  }
+
+  .document-surface .table-wrapper table{
+    width:max-content;
+    min-width:100%;
+  }
+
+  .document-surface th,
+  .document-surface td{
+    padding:7px 8px;
+    text-align:justify;
+  }
+
+  .document-surface .info-box,
+  .document-surface .step-card,
+  .document-surface .abbreviations{
+    font-size:14px;
+    padding:12px;
   }
 
   .document-surface .grid-2col,
@@ -1135,7 +1377,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   }
 
   .document-surface .abbr-container{
-    padding:15px;
+    padding:14px;
   }
 
   .document-surface .compact-grid{
@@ -1153,49 +1395,271 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
 
 
 /* =========================================================
-   ANTI-PRINT
+   PRINT / PDF
    ========================================================= */
 
-#printProtection{
-  display:none;
+/* Print-only HTML helpers are hidden in the normal reading view.
+   The actual printed header/footer are generated by @page margin boxes. */
+.print-header,
+.print-footer,
+.print-layout,
+.print-watermark{
+  display:none !important;
+  visibility:hidden !important;
 }
 
 @media print{
+
+  @page{
+    size:A4 portrait;
+    margin:9mm 18mm 9mm 18mm;
+    background:#ffffff;
+
+    /* ===== GÓC TRÊN ===== */
+    @top-left-corner{
+      content:"";
+      background:#860000;
+    }
+    @top-right-corner{
+      content:"";
+      background:#860000;
+    }
+
+    @top-left{
+      content:"Khuyến cáo ESC 2026";
+      background:#860000;
+      color:#fff;
+      font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
+      font-size:8pt;
+      font-weight:800;
+      white-space:nowrap;
+      text-align:left;
+      vertical-align:middle;
+      padding:1mm 4mm;
+    }
+
+    @top-center{
+      content:"";
+      background:#860000;
+    }
+
+    @top-right{
+      content:"Biên dịch: BS. Trần Thanh Hoàng Linh";
+      background:#860000;
+      color:#fff;
+      font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
+      font-size:8pt;
+      font-weight:800;
+      white-space:nowrap;
+      text-align:right;
+      vertical-align:middle;
+      padding:1mm 4mm;
+    }
+
+    /* ===== GÓC DƯỚI ===== */
+    @bottom-left-corner{
+      content:"";
+      background:#e3e3e3;
+    }
+    @bottom-right-corner{
+      content:"";
+      background:#e3e3e3;
+    }
+
+    @bottom-left{
+      content:"ⓕ  Hoàng Linh";
+      background:#e3e3e3;
+      color:#111;
+      font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
+      font-size:7pt;
+      font-weight:700;
+      white-space:nowrap;
+      text-align:left;
+      vertical-align:middle;
+      padding:1mm 4mm;
+    }
+
+    @bottom-center{
+      content:"Link đọc bài viết: https://huberton176.github.io/esh2026hf/";
+      background:#e3e3e3;
+      color:#111;
+      font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
+      font-size:7pt;
+      font-weight:700;
+      white-space:nowrap;
+      text-align:center;
+      vertical-align:middle;
+      padding:1mm;
+    }
+
+    @bottom-right{
+      content:counter(page);
+      background:#e3e3e3;
+      color:#111;
+      font-family:"Noto Sans","Segoe UI",Roboto,Arial,sans-serif;
+      font-size:7pt;
+      font-weight:700;
+      white-space:nowrap;
+      text-align:right;
+      vertical-align:middle;
+      padding:1mm 4mm;
+    }
+  }
+
   html,
   body{
     background:#fff!important;
+    color:#111!important;
+    margin:0!important;
+    padding:0!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
   }
 
-  body *{
-    visibility:hidden!important;
+  body::before,
+  body::after{
+    content:none!important;
+    display:none!important;
   }
 
-  #printProtection,
-  #printProtection *{
-    visibility:visible!important;
+  .reader-layout{
+    position:relative!important;
+    z-index:auto!important;
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
   }
 
-  #printProtection{
+  .toc-panel,
+  .mobile-toc,
+  .print-header,
+  .print-footer{
+    display:none!important;
+  }
+
+  .reader-main{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  .mobile-sticky-shell{
+    position:static!important;
+    width:100%!important;
+    margin:0 0 7mm!important;
+    padding:0!important;
+    background:transparent!important;
+    break-inside:avoid-page;
+    page-break-inside:avoid;
+  }
+
+  .reader-hero{
+    position:static!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:7mm 9mm!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+    break-inside:avoid-page;
+    page-break-inside:avoid;
+    box-shadow:none!important;
+    border:0.3mm solid #cfd5da!important;
+    border-radius:5mm!important;
+    background:#fff!important;
+  }
+
+  .reader-hero::after{
+    display:none!important;
+  }
+
+  .document-surface{
+    width:100%!important;
+    margin:0!important;
+    box-shadow:none!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+  }
+
+  .document-surface article{
+    width:100%!important;
+    background:transparent!important;
+  }
+
+  .print-watermark{
     display:flex!important;
-    position:fixed;
-    inset:0;
-    z-index:999999;
-    align-items:center;
-    justify-content:center;
-    padding:40px;
-    background:#fff;
-    color:#111;
-    font-family:Arial,sans-serif;
-    text-align:center;
-    font-size:20px;
-    line-height:1.5;
+    visibility:visible!important;
+    position:fixed!important;
+    left:50%!important;
+    top:50%!important;
+    transform:translate(-50%,-50%)!important;
+    width:auto!important;
+    height:150vh!important;
+    align-items:center!important;
+    justify-content:center!important;
+    pointer-events:none!important;
+    opacity:.08!important;
+    z-index:0!important;
   }
 
-  #printProtection strong{
-    display:block;
-    margin-bottom:10px;
-    color:#b30000;
-    font-size:26px;
+  .print-watermark img{
+    display:block!important;
+    width:auto!important;
+    height:150vh!important;
+    max-width:90vw!important;
+    margin:0!important;
+    object-fit:contain!important;
+  }
+
+  .document-surface *{
+    position:relative;
+    z-index:1;
+  }
+
+  .document-surface h1,
+  .document-surface h2,
+  .document-surface h3,
+  .document-surface h4,
+  .document-surface h5,
+  .document-surface figure,
+  .document-surface table,
+  .document-surface tr,
+  .document-surface .info-box,
+  .document-surface .step-card,
+  .document-surface .abbr-container,
+  .document-surface .abbreviations{
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .document-surface table{
+    break-inside:auto;
+    page-break-inside:auto;
+  }
+
+  .document-surface thead{
+    display:table-header-group;
+  }
+
+  .document-surface tfoot{
+    display:table-footer-group;
+  }
+
+  .document-surface .table-wrapper{
+    overflow:visible!important;
+    break-inside:auto;
+  }
+
+  a{
+    color:#004b87!important;
+    text-decoration:none!important;
   }
 }
 
@@ -1217,137 +1681,49 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
 
   <main class="reader-main">
 
-<section class="reader-hero" id="readerHero">
-    <p class="kicker">GUIDELINE</p>
+    <div class="mobile-sticky-shell">
+      <section class="reader-hero" id="readerHero">
+        <p class="kicker">GUIDELINE</p>
     <h1 style="color: #b30000; font-size: 30px;">
-        Khuyến cáo ESC 2026 về quản lý bệnh suy tim
-    </h1>
-    <p>Biên dịch: <strong style="color: #0066cc;">BS. TRẦN THANH HOÀNG LINH</strong></p>
-</section>
+            Khuyến cáo ESC 2026 về quản lý bệnh suy tim
+        </h1>
+        <p>Biên dịch: <strong style="color: #0066cc;">BS. TRẦN THANH HOÀNG LINH</strong></p>
 
-    <div class="mobile-toc">
-      <label for="mobileToc">Mục lục</label>
-      <select id="mobileToc"><option value="">Mục lục tài liệu…</option></select>
+        <div class="hero-contact" aria-label="Thông tin liên hệ">
+          <div class="hero-contact-item">
+            <span class="hero-contact-label" aria-label="Facebook">
+              <svg class="contact-icon facebook-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.923v-8.432H7.078v-3.491h3.047V9.413c0-3.017 1.792-4.689 4.533-4.689 1.312 0 2.686.235 2.686.235v2.973h-1.514c-1.491 0-1.955.93-1.955 1.885v2.261h3.328l-.532 3.491h-2.796v8.432C19.612 23.079 24 18.092 24 12.073z"/>
+              </svg>
+            </span>
+            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer">Hoàng Linh</a>
+          </div>
+
+          <div class="hero-contact-item">
+            <span class="hero-contact-label" aria-label="Email">
+              <svg class="contact-icon mail-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
+              </svg>
+            </span>
+            <a href="mailto:dr.tthlinh@gmail.com">dr.tthlinh@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="hero-reading-link">
+          <span class="hero-reading-link-label">Link bài đọc:</span>
+          <a href="https://huberton176.github.io/esh2026hf/" target="_blank" rel="noopener noreferrer">https://huberton176.github.io/esh2026hf/</a>
+        </div>
+      </section>
+
+      <div class="mobile-toc">
+        <label for="mobileToc">Mục lục</label>
+        <select id="mobileToc"><option value="">Mục lục tài liệu…</option></select>
+      </div>
     </div>
+
     <section class="document-surface">
 
 <article>
-
-<!-- Khối chữ viết tắt chuẩn hóa theo .abbr-container và .compact-grid -->
-<h3>DANH MỤC THUẬT NGỮ VIẾT TẮT</h3>
-<div class="abbr-container" style="font-size: 12px;">
-    <dl class="compact-grid" style="font-size: 12px;">
-        <div class="abbr-row"><dt>18F-FDG-PET</dt><dd>Chụp cắt lớp phát xạ positron kết hợp 18F-fluorodeoxyglucose</dd></div>
-        <div class="abbr-row"><dt>ACC</dt><dd>Hiệp hội Tim mạch học Hoa Kỳ <span class="vi-trans">American College of Cardiology</span></dd></div>
-        <div class="abbr-row"><dt>ACE-I</dt><dd>Thuốc ức chế men chuyển angiotensin <span class="vi-trans">Angiotensin-converting enzyme inhibitor</span></dd></div>
-        <div class="abbr-row"><dt>ACHD</dt><dd>Bệnh tim bẩm sinh người lớn <span class="vi-trans">Adult congenital heart disease</span></dd></div>
-        <div class="abbr-row"><dt>AF</dt><dd>Rung nhĩ <span class="vi-trans">Atrial fibrillation</span></dd></div>
-        <div class="abbr-row"><dt>AHA</dt><dd>Hiệp hội Tim mạch Hoa Kỳ <span class="vi-trans">American Heart Association</span></dd></div>
-        <div class="abbr-row"><dt>AL-CA</dt><dd>Bệnh amyloidosis tim chuỗi nhẹ immunoglobulin</dd></div>
-        <div class="abbr-row"><dt>AMT</dt><dd>Điều trị nội khoa bổ sung <span class="vi-trans">Additional medical therapy</span></dd></div>
-        <div class="abbr-row"><dt>APO</dt><dd>Phù phổi cấp <span class="vi-trans">Acute pulmonary oedema</span></dd></div>
-        <div class="abbr-row"><dt>ARB</dt><dd>Thuốc chẹn thụ thể angiotensin II <span class="vi-trans">Angiotensin II receptor blocker</span></dd></div>
-        <div class="abbr-row"><dt>ARNI</dt><dd>Thuốc ức chế thụ thể angiotensin–neprilysin</dd></div>
-        <div class="abbr-row"><dt>ARVC</dt><dd>Bệnh cơ tim loạn nhịp thất phải <span class="vi-trans">Arrhythmogenic right ventricular cardiomyopathy</span></dd></div>
-        <div class="abbr-row"><dt>ASCVD</dt><dd>Bệnh tim mạch do xơ vữa động mạch <span class="vi-trans">Atherosclerotic cardiovascular disease</span></dd></div>
-        <div class="abbr-row"><dt>ASV</dt><dd>Hỗ trợ thông khí thích ứng <span class="vi-trans">Adaptive servo-ventilation</span></dd></div>
-        <div class="abbr-row"><dt>ATTR</dt><dd>Bệnh amyloidosis do transthyretin</dd></div>
-        <div class="abbr-row"><dt>ATTR-CA</dt><dd>Bệnh amyloidosis tim do transthyretin</dd></div>
-        <div class="abbr-row"><dt>BMI</dt><dd>Chỉ số khối cơ thể <span class="vi-trans">Body mass index</span></dd></div>
-        <div class="abbr-row"><dt>BNP</dt><dd>Peptide lợi niệu type B <span class="vi-trans">B-type natriuretic peptide</span></dd></div>
-        <div class="abbr-row"><dt>CA</dt><dd>Bệnh amyloidosis tim <span class="vi-trans">Cardiac amyloidosis</span></dd></div>
-        <div class="abbr-row"><dt>CABG</dt><dd>Phẫu thuật bắc cầu động mạch vành <span class="vi-trans">Coronary artery bypass grafting</span></dd></div>
-        <div class="abbr-row"><dt>CAD</dt><dd>Bệnh động mạch vành <span class="vi-trans">Coronary artery disease</span></dd></div>
-        <div class="abbr-row"><dt>CI</dt><dd>Khoảng tin cậy <span class="vi-trans">Confidence interval</span></dd></div>
-        <div class="abbr-row"><dt>CIED</dt><dd>Thiết bị điện tử cấy ghép tim mạch <span class="vi-trans">Cardiac implantable electronic device</span></dd></div>
-        <div class="abbr-row"><dt>CKD</dt><dd>Bệnh thận mạn tính <span class="vi-trans">Chronic kidney disease</span></dd></div>
-        <div class="abbr-row"><dt>CMR</dt><dd>Cộng hưởng từ tim <span class="vi-trans">Cardiac magnetic resonance</span></dd></div>
-        <div class="abbr-row"><dt>COPD</dt><dd>Bệnh phổi tắc nghẽn mạn tính <span class="vi-trans">Chronic obstructive pulmonary disease</span></dd></div>
-        <div class="abbr-row"><dt>CPAP</dt><dd>Áp lực đường thở dương liên tục <span class="vi-trans">Continuous positive airway pressure</span></dd></div>
-        <div class="abbr-row"><dt>CPET</dt><dd>Kiểm tra gắng sức tim mạch - hô hấp <span class="vi-trans">Cardiopulmonary exercise testing</span></dd></div>
-        <div class="abbr-row"><dt>CRT</dt><dd>Liệu pháp tái đồng bộ tim <span class="vi-trans">Cardiac resynchronization therapy</span></dd></div>
-        <div class="abbr-row"><dt>CRT-D</dt><dd>Liệu pháp tái đồng bộ tim kèm máy khử rung <span class="vi-trans">Cardiac resynchronization therapy with defibrillator</span></dd></div>
-        <div class="abbr-row"><dt>CRT-P</dt><dd>Liệu pháp tái đồng bộ tim kèm máy tạo nhịp <span class="vi-trans">Cardiac resynchronization therapy with pacemaker</span></dd></div>
-        <div class="abbr-row"><dt>CS</dt><dd>Sốc tim <span class="vi-trans">Cardiogenic shock</span></dd></div>
-        <div class="abbr-row"><dt>CSA</dt><dd>Ngưng thở khi ngủ trung ương <span class="vi-trans">Central sleep apnoea</span></dd></div>
-        <div class="abbr-row"><dt>CSP</dt><dd>Tạo nhịp hệ thống dẫn truyền <span class="vi-trans">Conduction system pacing</span></dd></div>
-        <div class="abbr-row"><dt>CT</dt><dd>Chụp cắt lớp vi tính <span class="vi-trans">Computed tomography</span></dd></div>
-        <div class="abbr-row"><dt>CTCA</dt><dd>Chụp cắt lớp vi tính mạch vành <span class="vi-trans">Computed tomography coronary angiography</span></dd></div>
-        <div class="abbr-row"><dt>CV</dt><dd>Tim mạch <span class="vi-trans">Cardiovascular</span></dd></div>
-        <div class="abbr-row"><dt>CVD</dt><dd>Bệnh tim mạch <span class="vi-trans">Cardiovascular disease</span></dd></div>
-        <div class="abbr-row"><dt>DCM</dt><dd>Bệnh cơ tim giãn <span class="vi-trans">Dilated cardiomyopathy</span></dd></div>
-        <div class="abbr-row"><dt>DHF</dt><dd>Suy tim mất bù <span class="vi-trans">Decompensated heart failure</span></dd></div>
-        <div class="abbr-row"><dt>DPD</dt><dd>Axit 3,3-Diphosphono-1,2-propanodicarboxylic</dd></div>
-        <div class="abbr-row"><dt>ECG</dt><dd>Điện tâm đồ <span class="vi-trans">Electrocardiogram</span></dd></div>
-        <div class="abbr-row"><dt>ECLS</dt><dd>Hỗ trợ sự sống ngoài cơ thể <span class="vi-trans">Extracorporeal life support</span></dd></div>
-        <div class="abbr-row"><dt>ECV</dt><dd>Thể tích ngoại bào <span class="vi-trans">Extracellular volume</span></dd></div>
-        <div class="abbr-row"><dt>eGFR</dt><dd>Độ lọc cầu thận ước tính <span class="vi-trans">Estimated glomerular filtration rate</span></dd></div>
-        <div class="abbr-row"><dt>ESC</dt><dd>Hiệp hội Tim mạch Châu Âu <span class="vi-trans">European Society of Cardiology</span></dd></div>
-        <div class="abbr-row"><dt>FITT</dt><dd>Tần suất, Cường độ, Thời gian, Loại hình <span class="vi-trans">Frequency, intensity, time, type</span></dd></div>
-        <div class="abbr-row"><dt>FMT</dt><dd>Điều trị nội khoa nền tảng <span class="vi-trans">Foundational medical therapy</span></dd></div>
-        <div class="abbr-row"><dt>GDIT</dt><dd>Điều trị can thiệp theo hướng dẫn <span class="vi-trans">Guideline-directed interventional therapy</span></dd></div>
-        <div class="abbr-row"><dt>GDMT</dt><dd>Điều trị nội khoa theo hướng dẫn <span class="vi-trans">Guideline-directed medical therapy</span></dd></div>
-        <div class="abbr-row"><dt>GFR</dt><dd>Độ lọc cầu thận <span class="vi-trans">Glomerular filtration rate</span></dd></div>
-        <div class="abbr-row"><dt>GIP</dt><dd>Peptide hướng insulin phụ thuộc glucose <span class="vi-trans">Glucose-dependent insulinotropic peptide</span></dd></div>
-        <div class="abbr-row"><dt>GLP-1 RA</dt><dd>Chất chủ vận thụ thể glucagon-like peptide-1</dd></div>
-        <div class="abbr-row"><dt>HCM</dt><dd>Bệnh cơ tim phì đại <span class="vi-trans">Hypertrophic cardiomyopathy</span></dd></div>
-        <div class="abbr-row"><dt>HF</dt><dd>Suy tim <span class="vi-trans">Heart failure</span></dd></div>
-        <div class="abbr-row"><dt>HFA</dt><dd>Hiệp hội Suy tim <span class="vi-trans">Heart Failure Association</span></dd></div>
-        <div class="abbr-row"><dt>HFH</dt><dd>Nhập viện do suy tim <span class="vi-trans">Heart failure hospitalization</span></dd></div>
-        <div class="abbr-row"><dt>HF-MDT</dt><dd>Nhóm đa chuyên khoa suy tim <span class="vi-trans">Heart failure multidisciplinary team</span></dd></div>
-        <div class="abbr-row"><dt>HFmrEF</dt><dd>Suy tim phân suất tống máu giảm nhẹ <span class="vi-trans">Heart failure with mildly reduced ejection fraction</span></dd></div>
-        <div class="abbr-row"><dt>HFpEF</dt><dd>Suy tim phân suất tống máu bảo tồn <span class="vi-trans">Heart failure with preserved ejection fraction</span></dd></div>
-        <div class="abbr-row"><dt>HFrEF</dt><dd>Suy tim phân suất tống máu giảm <span class="vi-trans">Heart failure with reduced ejection fraction</span></dd></div>
-        <div class="abbr-row"><dt>HR</dt><dd>Tỷ số nguy cơ <span class="vi-trans">Hazard ratio</span> / Nhịp tim <span class="vi-trans">Heart rate</span></dd></div>
-        <div class="abbr-row"><dt>i.v.</dt><dd>Tiêm/Truyền tĩnh mạch <span class="vi-trans">Intravenous</span></dd></div>
-        <div class="abbr-row"><dt>IABP</dt><dd>Bơm bóng đối xung nội động mạch chủ <span class="vi-trans">Intra-aortic balloon pump</span></dd></div>
-        <div class="abbr-row"><dt>ICA</dt><dd>Chụp mạch vành xâm lấn <span class="vi-trans">Invasive coronary angiography</span></dd></div>
-        <div class="abbr-row"><dt>ICD</dt><dd>Máy khử rung tim cấy ghép <span class="vi-trans">Implantable cardioverter-defibrillator</span></dd></div>
-        <div class="abbr-row"><dt>ID</dt><dd>Thiếu sắt <span class="vi-trans">Iron deficiency</span></dd></div>
-        <div class="abbr-row"><dt>INTERMACS</dt><dd>Sổ bộ Liên cơ quan về Hỗ trợ Tuần hoàn Cơ học <span class="vi-trans">Interagency Registry for Mechanically Assisted Circulatory Support</span></dd></div>
-        <div class="abbr-row"><dt>KCCQ</dt><dd>Bảng câu hỏi Bệnh cơ tim Kansas City</dd></div>
-        <div class="abbr-row"><dt>KDIGO</dt><dd>Bệnh thận: Cải thiện kết cục toàn cầu <span class="vi-trans">Kidney Disease: Improving Global Outcomes</span></dd></div>
-        <div class="abbr-row"><dt>LBBB</dt><dd>Block nhánh trái <span class="vi-trans">Left bundle branch block</span></dd></div>
-        <div class="abbr-row"><dt>LGE</dt><dd>Bắt thuốc đối quang từ muộn <span class="vi-trans">Late gadolinium enhancement</span></dd></div>
-        <div class="abbr-row"><dt>LV</dt><dd>Tâm thất trái <span class="vi-trans">Left ventricular</span></dd></div>
-        <div class="abbr-row"><dt>LVAD</dt><dd>Thiết bị hỗ trợ thất trái <span class="vi-trans">Left ventricular assist device</span></dd></div>
-        <div class="abbr-row"><dt>LVEF</dt><dd>Phân suất tống máu thất trái <span class="vi-trans">Left ventricular ejection fraction</span></dd></div>
-        <div class="abbr-row"><dt>MCS</dt><dd>Hỗ trợ tuần hoàn cơ học <span class="vi-trans">Mechanical circulatory support</span></dd></div>
-        <div class="abbr-row"><dt>MI</dt><dd>Nhồi máu cơ tim <span class="vi-trans">Myocardial infarction</span></dd></div>
-        <div class="abbr-row"><dt>MR</dt><dd>Hở van hai lá <span class="vi-trans">Mitral regurgitation</span></dd></div>
-        <div class="abbr-row"><dt>MRA</dt><dd>Thuốc đối kháng thụ thể mineralocorticoid <span class="vi-trans">Mineralocorticoid receptor antagonist</span></dd></div>
-        <div class="abbr-row"><dt>MR-proANP</dt><dd>Peptide lợi niệu tiền tâm nhĩ đoạn giữa <span class="vi-trans">Mid-regional pro-atrial natriuretic peptide</span></dd></div>
-        <div class="abbr-row"><dt>NT-proBNP</dt><dd>Pro-B-type natriuretic peptide đoạn N-tận <span class="vi-trans">N-terminal pro-B-type natriuretic peptide</span></dd></div>
-        <div class="abbr-row"><dt>NYHA</dt><dd>Hiệp hội Tim mạch New York <span class="vi-trans">New York Heart Association</span></dd></div>
-        <div class="abbr-row"><dt>OSA</dt><dd>Ngưng thở khi ngủ tắc nghẽn <span class="vi-trans">Obstructive sleep apnoea</span></dd></div>
-        <div class="abbr-row"><dt>PaO<sub>2</sub></dt><dd>Phân áp oxy <span class="vi-trans">Partial pressure of oxygen</span></dd></div>
-        <div class="abbr-row"><dt>PCI</dt><dd>Can thiệp mạch vành qua da <span class="vi-trans">Percutaneous coronary intervention</span></dd></div>
-        <div class="abbr-row"><dt>PVC</dt><dd>Ngoại tâm thu thất <span class="vi-trans">Premature ventricular contraction</span></dd></div>
-        <div class="abbr-row"><dt>QoL</dt><dd>Chất lượng cuộc sống <span class="vi-trans">Quality of life</span></dd></div>
-        <div class="abbr-row"><dt>RCT</dt><dd>Thử nghiệm ngẫu nhiên có đối chứng <span class="vi-trans">Randomized controlled trial</span></dd></div>
-        <div class="abbr-row"><dt>RHC</dt><dd>Thông tim phải <span class="vi-trans">Right heart catheterization</span></dd></div>
-        <div class="abbr-row"><dt>RV</dt><dd>Tâm thất phải <span class="vi-trans">Right ventricular</span></dd></div>
-        <div class="abbr-row"><dt>SCAI</dt><dd>Hiệp hội Can thiệp và Chụp mạch Tim mạch học <span class="vi-trans">Society for Cardiovascular Angiography and Interventions</span></dd></div>
-        <div class="abbr-row"><dt>SCD</dt><dd>Đột tử do tim <span class="vi-trans">Sudden cardiac death</span></dd></div>
-        <div class="abbr-row"><dt>SDB</dt><dd>Rối loạn thở khi ngủ <span class="vi-trans">Sleep-disordered breathing</span></dd></div>
-        <div class="abbr-row"><dt>SGLT2</dt><dd>Chất đồng vận chuyển Natri-glucose 2 <span class="vi-trans">Sodium–glucose co-transporter 2</span></dd></div>
-        <div class="abbr-row"><dt>SGLT2-I</dt><dd>Thuốc ức chế đồng vận chuyển Natri-glucose 2</dd></div>
-        <div class="abbr-row"><dt>SHARC</dt><dd>Hiệp hội Nghiên cứu Học thuật về Sốc <span class="vi-trans">Shock Academic Research Consortium</span></dd></div>
-        <div class="abbr-row"><dt>S-ICD</dt><dd>Máy khử rung tim cấy ghép dưới da <span class="vi-trans">Subcutaneous implantable cardioverter-defibrillator</span></dd></div>
-        <div class="abbr-row"><dt>SpO<sub>2</sub></dt><dd>Độ bão hòa oxy máu <span class="vi-trans">Oxygen saturation</span></dd></div>
-        <div class="abbr-row"><dt>T2DM</dt><dd>Bệnh tiểu đường type 2 <span class="vi-trans">Type 2 diabetes mellitus</span></dd></div>
-        <div class="abbr-row"><dt>TAVI</dt><dd>Thay van động mạch chủ qua ống thông <span class="vi-trans">Transcatheter aortic valve implantation</span></dd></div>
-        <div class="abbr-row"><dt>TEER</dt><dd>Sửa van mép-nối-mép qua ống thông <span class="vi-trans">Transcatheter edge-to-edge repair</span></dd></div>
-        <div class="abbr-row"><dt>TR</dt><dd>Hở van ba lá <span class="vi-trans">Tricuspid regurgitation</span></dd></div>
-        <div class="abbr-row"><dt>TSAT</dt><dd>Độ bão hòa Transferrin <span class="vi-trans">Transferrin saturation</span></dd></div>
-        <div class="abbr-row"><dt>TTR</dt><dd>Transthyretin</dd></div>
-        <div class="abbr-row"><dt>UACR</dt><dd>Tỷ số albumin/creatinine trong nước tiểu <span class="vi-trans">Urine albumin-to-creatinine ratio</span></dd></div>
-        <div class="abbr-row"><dt>uNa<sup>+</sup></dt><dd>Natri niệu <span class="vi-trans">Urinary sodium</span></dd></div>
-        <div class="abbr-row"><dt>WHF</dt><dd>Suy tim tiến triển nặng <span class="vi-trans">Worsening heart failure</span></dd></div>
-        <div class="abbr-row"><dt>WHO</dt><dd>Tổ chức Y tế Thế giới <span class="vi-trans">World Health Organization</span></dd></div>
-    </dl>
-</div>
-<p>Để tra cứu các từ viết tắt của những nghiên cứu và thử nghiệm, vui lòng xem Bảng S1, Dữ liệu bổ sung trực tuyến.</p>
 
 <!-- Mục 1: Lời nói đầu (Level x. -> h2) -->
 <h2>1. Lời nói đầu</h2>
@@ -5732,25 +6108,174 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
     <li>Thu thập dữ liệu làm cơ sở đưa ra khuyến cáo về sàng lọc người mang gen biến dị TTR—thời điểm bắt đầu và khoảng cách giữa các lần theo dõi.</li>
 </ul>
 
-
-
-
+<!-- Khối chữ viết tắt chuẩn hóa theo .abbr-container và .compact-grid -->
+<h3>DANH MỤC THUẬT NGỮ VIẾT TẮT</h3>
+<div class="abbr-container" style="font-size: 12px;">
+    <dl class="compact-grid" style="font-size: 12px;">
+        <div class="abbr-row"><dt>18F-FDG-PET</dt><dd>Chụp cắt lớp phát xạ positron kết hợp 18F-fluorodeoxyglucose</dd></div>
+        <div class="abbr-row"><dt>ACC</dt><dd>Hiệp hội Tim mạch học Hoa Kỳ <span class="vi-trans">American College of Cardiology</span></dd></div>
+        <div class="abbr-row"><dt>ACE-I</dt><dd>Thuốc ức chế men chuyển angiotensin <span class="vi-trans">Angiotensin-converting enzyme inhibitor</span></dd></div>
+        <div class="abbr-row"><dt>ACHD</dt><dd>Bệnh tim bẩm sinh người lớn <span class="vi-trans">Adult congenital heart disease</span></dd></div>
+        <div class="abbr-row"><dt>AF</dt><dd>Rung nhĩ <span class="vi-trans">Atrial fibrillation</span></dd></div>
+        <div class="abbr-row"><dt>AHA</dt><dd>Hiệp hội Tim mạch Hoa Kỳ <span class="vi-trans">American Heart Association</span></dd></div>
+        <div class="abbr-row"><dt>AL-CA</dt><dd>Bệnh amyloidosis tim chuỗi nhẹ immunoglobulin</dd></div>
+        <div class="abbr-row"><dt>AMT</dt><dd>Điều trị nội khoa bổ sung <span class="vi-trans">Additional medical therapy</span></dd></div>
+        <div class="abbr-row"><dt>APO</dt><dd>Phù phổi cấp <span class="vi-trans">Acute pulmonary oedema</span></dd></div>
+        <div class="abbr-row"><dt>ARB</dt><dd>Thuốc chẹn thụ thể angiotensin II <span class="vi-trans">Angiotensin II receptor blocker</span></dd></div>
+        <div class="abbr-row"><dt>ARNI</dt><dd>Thuốc ức chế thụ thể angiotensin–neprilysin</dd></div>
+        <div class="abbr-row"><dt>ARVC</dt><dd>Bệnh cơ tim loạn nhịp thất phải <span class="vi-trans">Arrhythmogenic right ventricular cardiomyopathy</span></dd></div>
+        <div class="abbr-row"><dt>ASCVD</dt><dd>Bệnh tim mạch do xơ vữa động mạch <span class="vi-trans">Atherosclerotic cardiovascular disease</span></dd></div>
+        <div class="abbr-row"><dt>ASV</dt><dd>Hỗ trợ thông khí thích ứng <span class="vi-trans">Adaptive servo-ventilation</span></dd></div>
+        <div class="abbr-row"><dt>ATTR</dt><dd>Bệnh amyloidosis do transthyretin</dd></div>
+        <div class="abbr-row"><dt>ATTR-CA</dt><dd>Bệnh amyloidosis tim do transthyretin</dd></div>
+        <div class="abbr-row"><dt>BMI</dt><dd>Chỉ số khối cơ thể <span class="vi-trans">Body mass index</span></dd></div>
+        <div class="abbr-row"><dt>BNP</dt><dd>Peptide lợi niệu type B <span class="vi-trans">B-type natriuretic peptide</span></dd></div>
+        <div class="abbr-row"><dt>CA</dt><dd>Bệnh amyloidosis tim <span class="vi-trans">Cardiac amyloidosis</span></dd></div>
+        <div class="abbr-row"><dt>CABG</dt><dd>Phẫu thuật bắc cầu động mạch vành <span class="vi-trans">Coronary artery bypass grafting</span></dd></div>
+        <div class="abbr-row"><dt>CAD</dt><dd>Bệnh động mạch vành <span class="vi-trans">Coronary artery disease</span></dd></div>
+        <div class="abbr-row"><dt>CI</dt><dd>Khoảng tin cậy <span class="vi-trans">Confidence interval</span></dd></div>
+        <div class="abbr-row"><dt>CIED</dt><dd>Thiết bị điện tử cấy ghép tim mạch <span class="vi-trans">Cardiac implantable electronic device</span></dd></div>
+        <div class="abbr-row"><dt>CKD</dt><dd>Bệnh thận mạn tính <span class="vi-trans">Chronic kidney disease</span></dd></div>
+        <div class="abbr-row"><dt>CMR</dt><dd>Cộng hưởng từ tim <span class="vi-trans">Cardiac magnetic resonance</span></dd></div>
+        <div class="abbr-row"><dt>COPD</dt><dd>Bệnh phổi tắc nghẽn mạn tính <span class="vi-trans">Chronic obstructive pulmonary disease</span></dd></div>
+        <div class="abbr-row"><dt>CPAP</dt><dd>Áp lực đường thở dương liên tục <span class="vi-trans">Continuous positive airway pressure</span></dd></div>
+        <div class="abbr-row"><dt>CPET</dt><dd>Kiểm tra gắng sức tim mạch - hô hấp <span class="vi-trans">Cardiopulmonary exercise testing</span></dd></div>
+        <div class="abbr-row"><dt>CRT</dt><dd>Liệu pháp tái đồng bộ tim <span class="vi-trans">Cardiac resynchronization therapy</span></dd></div>
+        <div class="abbr-row"><dt>CRT-D</dt><dd>Liệu pháp tái đồng bộ tim kèm máy khử rung <span class="vi-trans">Cardiac resynchronization therapy with defibrillator</span></dd></div>
+        <div class="abbr-row"><dt>CRT-P</dt><dd>Liệu pháp tái đồng bộ tim kèm máy tạo nhịp <span class="vi-trans">Cardiac resynchronization therapy with pacemaker</span></dd></div>
+        <div class="abbr-row"><dt>CS</dt><dd>Sốc tim <span class="vi-trans">Cardiogenic shock</span></dd></div>
+        <div class="abbr-row"><dt>CSA</dt><dd>Ngưng thở khi ngủ trung ương <span class="vi-trans">Central sleep apnoea</span></dd></div>
+        <div class="abbr-row"><dt>CSP</dt><dd>Tạo nhịp hệ thống dẫn truyền <span class="vi-trans">Conduction system pacing</span></dd></div>
+        <div class="abbr-row"><dt>CT</dt><dd>Chụp cắt lớp vi tính <span class="vi-trans">Computed tomography</span></dd></div>
+        <div class="abbr-row"><dt>CTCA</dt><dd>Chụp cắt lớp vi tính mạch vành <span class="vi-trans">Computed tomography coronary angiography</span></dd></div>
+        <div class="abbr-row"><dt>CV</dt><dd>Tim mạch <span class="vi-trans">Cardiovascular</span></dd></div>
+        <div class="abbr-row"><dt>CVD</dt><dd>Bệnh tim mạch <span class="vi-trans">Cardiovascular disease</span></dd></div>
+        <div class="abbr-row"><dt>DCM</dt><dd>Bệnh cơ tim giãn <span class="vi-trans">Dilated cardiomyopathy</span></dd></div>
+        <div class="abbr-row"><dt>DHF</dt><dd>Suy tim mất bù <span class="vi-trans">Decompensated heart failure</span></dd></div>
+        <div class="abbr-row"><dt>DPD</dt><dd>Axit 3,3-Diphosphono-1,2-propanodicarboxylic</dd></div>
+        <div class="abbr-row"><dt>ECG</dt><dd>Điện tâm đồ <span class="vi-trans">Electrocardiogram</span></dd></div>
+        <div class="abbr-row"><dt>ECLS</dt><dd>Hỗ trợ sự sống ngoài cơ thể <span class="vi-trans">Extracorporeal life support</span></dd></div>
+        <div class="abbr-row"><dt>ECV</dt><dd>Thể tích ngoại bào <span class="vi-trans">Extracellular volume</span></dd></div>
+        <div class="abbr-row"><dt>eGFR</dt><dd>Độ lọc cầu thận ước tính <span class="vi-trans">Estimated glomerular filtration rate</span></dd></div>
+        <div class="abbr-row"><dt>ESC</dt><dd>Hiệp hội Tim mạch Châu Âu <span class="vi-trans">European Society of Cardiology</span></dd></div>
+        <div class="abbr-row"><dt>FITT</dt><dd>Tần suất, Cường độ, Thời gian, Loại hình <span class="vi-trans">Frequency, intensity, time, type</span></dd></div>
+        <div class="abbr-row"><dt>FMT</dt><dd>Điều trị nội khoa nền tảng <span class="vi-trans">Foundational medical therapy</span></dd></div>
+        <div class="abbr-row"><dt>GDIT</dt><dd>Điều trị can thiệp theo hướng dẫn <span class="vi-trans">Guideline-directed interventional therapy</span></dd></div>
+        <div class="abbr-row"><dt>GDMT</dt><dd>Điều trị nội khoa theo hướng dẫn <span class="vi-trans">Guideline-directed medical therapy</span></dd></div>
+        <div class="abbr-row"><dt>GFR</dt><dd>Độ lọc cầu thận <span class="vi-trans">Glomerular filtration rate</span></dd></div>
+        <div class="abbr-row"><dt>GIP</dt><dd>Peptide hướng insulin phụ thuộc glucose <span class="vi-trans">Glucose-dependent insulinotropic peptide</span></dd></div>
+        <div class="abbr-row"><dt>GLP-1 RA</dt><dd>Chất chủ vận thụ thể glucagon-like peptide-1</dd></div>
+        <div class="abbr-row"><dt>HCM</dt><dd>Bệnh cơ tim phì đại <span class="vi-trans">Hypertrophic cardiomyopathy</span></dd></div>
+        <div class="abbr-row"><dt>HF</dt><dd>Suy tim <span class="vi-trans">Heart failure</span></dd></div>
+        <div class="abbr-row"><dt>HFA</dt><dd>Hiệp hội Suy tim <span class="vi-trans">Heart Failure Association</span></dd></div>
+        <div class="abbr-row"><dt>HFH</dt><dd>Nhập viện do suy tim <span class="vi-trans">Heart failure hospitalization</span></dd></div>
+        <div class="abbr-row"><dt>HF-MDT</dt><dd>Nhóm đa chuyên khoa suy tim <span class="vi-trans">Heart failure multidisciplinary team</span></dd></div>
+        <div class="abbr-row"><dt>HFmrEF</dt><dd>Suy tim phân suất tống máu giảm nhẹ <span class="vi-trans">Heart failure with mildly reduced ejection fraction</span></dd></div>
+        <div class="abbr-row"><dt>HFpEF</dt><dd>Suy tim phân suất tống máu bảo tồn <span class="vi-trans">Heart failure with preserved ejection fraction</span></dd></div>
+        <div class="abbr-row"><dt>HFrEF</dt><dd>Suy tim phân suất tống máu giảm <span class="vi-trans">Heart failure with reduced ejection fraction</span></dd></div>
+        <div class="abbr-row"><dt>HR</dt><dd>Tỷ số nguy cơ <span class="vi-trans">Hazard ratio</span> / Nhịp tim <span class="vi-trans">Heart rate</span></dd></div>
+        <div class="abbr-row"><dt>i.v.</dt><dd>Tiêm/Truyền tĩnh mạch <span class="vi-trans">Intravenous</span></dd></div>
+        <div class="abbr-row"><dt>IABP</dt><dd>Bơm bóng đối xung nội động mạch chủ <span class="vi-trans">Intra-aortic balloon pump</span></dd></div>
+        <div class="abbr-row"><dt>ICA</dt><dd>Chụp mạch vành xâm lấn <span class="vi-trans">Invasive coronary angiography</span></dd></div>
+        <div class="abbr-row"><dt>ICD</dt><dd>Máy khử rung tim cấy ghép <span class="vi-trans">Implantable cardioverter-defibrillator</span></dd></div>
+        <div class="abbr-row"><dt>ID</dt><dd>Thiếu sắt <span class="vi-trans">Iron deficiency</span></dd></div>
+        <div class="abbr-row"><dt>INTERMACS</dt><dd>Sổ bộ Liên cơ quan về Hỗ trợ Tuần hoàn Cơ học <span class="vi-trans">Interagency Registry for Mechanically Assisted Circulatory Support</span></dd></div>
+        <div class="abbr-row"><dt>KCCQ</dt><dd>Bảng câu hỏi Bệnh cơ tim Kansas City</dd></div>
+        <div class="abbr-row"><dt>KDIGO</dt><dd>Bệnh thận: Cải thiện kết cục toàn cầu <span class="vi-trans">Kidney Disease: Improving Global Outcomes</span></dd></div>
+        <div class="abbr-row"><dt>LBBB</dt><dd>Block nhánh trái <span class="vi-trans">Left bundle branch block</span></dd></div>
+        <div class="abbr-row"><dt>LGE</dt><dd>Bắt thuốc đối quang từ muộn <span class="vi-trans">Late gadolinium enhancement</span></dd></div>
+        <div class="abbr-row"><dt>LV</dt><dd>Tâm thất trái <span class="vi-trans">Left ventricular</span></dd></div>
+        <div class="abbr-row"><dt>LVAD</dt><dd>Thiết bị hỗ trợ thất trái <span class="vi-trans">Left ventricular assist device</span></dd></div>
+        <div class="abbr-row"><dt>LVEF</dt><dd>Phân suất tống máu thất trái <span class="vi-trans">Left ventricular ejection fraction</span></dd></div>
+        <div class="abbr-row"><dt>MCS</dt><dd>Hỗ trợ tuần hoàn cơ học <span class="vi-trans">Mechanical circulatory support</span></dd></div>
+        <div class="abbr-row"><dt>MI</dt><dd>Nhồi máu cơ tim <span class="vi-trans">Myocardial infarction</span></dd></div>
+        <div class="abbr-row"><dt>MR</dt><dd>Hở van hai lá <span class="vi-trans">Mitral regurgitation</span></dd></div>
+        <div class="abbr-row"><dt>MRA</dt><dd>Thuốc đối kháng thụ thể mineralocorticoid <span class="vi-trans">Mineralocorticoid receptor antagonist</span></dd></div>
+        <div class="abbr-row"><dt>MR-proANP</dt><dd>Peptide lợi niệu tiền tâm nhĩ đoạn giữa <span class="vi-trans">Mid-regional pro-atrial natriuretic peptide</span></dd></div>
+        <div class="abbr-row"><dt>NT-proBNP</dt><dd>Pro-B-type natriuretic peptide đoạn N-tận <span class="vi-trans">N-terminal pro-B-type natriuretic peptide</span></dd></div>
+        <div class="abbr-row"><dt>NYHA</dt><dd>Hiệp hội Tim mạch New York <span class="vi-trans">New York Heart Association</span></dd></div>
+        <div class="abbr-row"><dt>OSA</dt><dd>Ngưng thở khi ngủ tắc nghẽn <span class="vi-trans">Obstructive sleep apnoea</span></dd></div>
+        <div class="abbr-row"><dt>PaO<sub>2</sub></dt><dd>Phân áp oxy <span class="vi-trans">Partial pressure of oxygen</span></dd></div>
+        <div class="abbr-row"><dt>PCI</dt><dd>Can thiệp mạch vành qua da <span class="vi-trans">Percutaneous coronary intervention</span></dd></div>
+        <div class="abbr-row"><dt>PVC</dt><dd>Ngoại tâm thu thất <span class="vi-trans">Premature ventricular contraction</span></dd></div>
+        <div class="abbr-row"><dt>QoL</dt><dd>Chất lượng cuộc sống <span class="vi-trans">Quality of life</span></dd></div>
+        <div class="abbr-row"><dt>RCT</dt><dd>Thử nghiệm ngẫu nhiên có đối chứng <span class="vi-trans">Randomized controlled trial</span></dd></div>
+        <div class="abbr-row"><dt>RHC</dt><dd>Thông tim phải <span class="vi-trans">Right heart catheterization</span></dd></div>
+        <div class="abbr-row"><dt>RV</dt><dd>Tâm thất phải <span class="vi-trans">Right ventricular</span></dd></div>
+        <div class="abbr-row"><dt>SCAI</dt><dd>Hiệp hội Can thiệp và Chụp mạch Tim mạch học <span class="vi-trans">Society for Cardiovascular Angiography and Interventions</span></dd></div>
+        <div class="abbr-row"><dt>SCD</dt><dd>Đột tử do tim <span class="vi-trans">Sudden cardiac death</span></dd></div>
+        <div class="abbr-row"><dt>SDB</dt><dd>Rối loạn thở khi ngủ <span class="vi-trans">Sleep-disordered breathing</span></dd></div>
+        <div class="abbr-row"><dt>SGLT2</dt><dd>Chất đồng vận chuyển Natri-glucose 2 <span class="vi-trans">Sodium–glucose co-transporter 2</span></dd></div>
+        <div class="abbr-row"><dt>SGLT2-I</dt><dd>Thuốc ức chế đồng vận chuyển Natri-glucose 2</dd></div>
+        <div class="abbr-row"><dt>SHARC</dt><dd>Hiệp hội Nghiên cứu Học thuật về Sốc <span class="vi-trans">Shock Academic Research Consortium</span></dd></div>
+        <div class="abbr-row"><dt>S-ICD</dt><dd>Máy khử rung tim cấy ghép dưới da <span class="vi-trans">Subcutaneous implantable cardioverter-defibrillator</span></dd></div>
+        <div class="abbr-row"><dt>SpO<sub>2</sub></dt><dd>Độ bão hòa oxy máu <span class="vi-trans">Oxygen saturation</span></dd></div>
+        <div class="abbr-row"><dt>T2DM</dt><dd>Bệnh tiểu đường type 2 <span class="vi-trans">Type 2 diabetes mellitus</span></dd></div>
+        <div class="abbr-row"><dt>TAVI</dt><dd>Thay van động mạch chủ qua ống thông <span class="vi-trans">Transcatheter aortic valve implantation</span></dd></div>
+        <div class="abbr-row"><dt>TEER</dt><dd>Sửa van mép-nối-mép qua ống thông <span class="vi-trans">Transcatheter edge-to-edge repair</span></dd></div>
+        <div class="abbr-row"><dt>TR</dt><dd>Hở van ba lá <span class="vi-trans">Tricuspid regurgitation</span></dd></div>
+        <div class="abbr-row"><dt>TSAT</dt><dd>Độ bão hòa Transferrin <span class="vi-trans">Transferrin saturation</span></dd></div>
+        <div class="abbr-row"><dt>TTR</dt><dd>Transthyretin</dd></div>
+        <div class="abbr-row"><dt>UACR</dt><dd>Tỷ số albumin/creatinine trong nước tiểu <span class="vi-trans">Urine albumin-to-creatinine ratio</span></dd></div>
+        <div class="abbr-row"><dt>uNa<sup>+</sup></dt><dd>Natri niệu <span class="vi-trans">Urinary sodium</span></dd></div>
+        <div class="abbr-row"><dt>WHF</dt><dd>Suy tim tiến triển nặng <span class="vi-trans">Worsening heart failure</span></dd></div>
+        <div class="abbr-row"><dt>WHO</dt><dd>Tổ chức Y tế Thế giới <span class="vi-trans">World Health Organization</span></dd></div>
+    </dl>
+</div>
+<p>Để tra cứu các từ viết tắt của những nghiên cứu và thử nghiệm, vui lòng xem Bảng S1, Dữ liệu bổ sung trực tuyến.</p>
 
 </article>
     </section>
   </main>
 </div>
 
-<div id="printProtection" role="alert" aria-live="polite">
-  <div>
-    <strong>Medical Library</strong>
-    Tài liệu này không hỗ trợ in hoặc xuất bản qua chức năng Print của trình duyệt.
+<!-- Print-only header/footer. Hidden during normal reading; shown only in print. -->
+<div class="print-header" aria-hidden="true">
+  <div class="print-layout-left">
+    <svg class="print-contact-icon facebook-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.923v-8.432H7.078v-3.491h3.047V9.413c0-3.017 1.792-4.689 4.533-4.689 1.312 0 2.686.235 2.686.235v2.973h-1.514c-1.491 0-1.955.93-1.955 1.885v2.261h3.328l-.532 3.491h-2.796v8.432C19.612 23.079 24 18.092 24 12.073z"/>
+    </svg>
+    <span>Hoàng Linh</span>
   </div>
+  <div class="print-layout-center">
+    <span>Link bài đọc:</span>
+    <a href="https://huberton176.github.io/esh2026hf/">https://huberton176.github.io/esh2026hf/</a>
+  </div>
+  <div class="print-layout-right">
+    <svg class="print-contact-icon mail-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
+    </svg>
+    <span>dr.tthlinh@gmail.com</span>
+  </div>
+</div>
+
+<div class="print-footer" aria-hidden="true">
+  <div class="print-layout-left">
+    <svg class="print-contact-icon facebook-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.923v-8.432H7.078v-3.491h3.047V9.413c0-3.017 1.792-4.689 4.533-4.689 1.312 0 2.686.235 2.686.235v2.973h-1.514c-1.491 0-1.955.93-1.955 1.885v2.261h3.328l-.532 3.491h-2.796v8.432C19.612 23.079 24 18.092 24 12.073z"/>
+    </svg>
+    <span>Hoàng Linh</span>
+  </div>
+  <div class="print-layout-center">
+    <span>Link bài đọc:</span>
+    <a href="https://huberton176.github.io/esh2026hf/">https://huberton176.github.io/esh2026hf/</a>
+  </div>
+  <div class="print-layout-right">
+    <svg class="print-contact-icon mail-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
+    </svg>
+    <span>dr.tthlinh@gmail.com</span>
+  </div>
+</div>
+
+<div class="print-watermark" aria-hidden="true">
+  <img src="https://file.garden/aRcee0oeuCLsBw6X/logo" alt="">
 </div>
 
 <script>
 
 (function(){
+
   const root = document.documentElement;
   const hero = document.getElementById("readerHero");
   const tocList = document.getElementById("tocList");
@@ -5765,11 +6290,6 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   ));
 
   function normalize(t){ return String(t || "").replace(/\s+/g," ").trim(); }
-
-  function syncHeroHeight(){
-    if (!hero) return;
-    root.style.setProperty("--hero-height", Math.ceil(hero.getBoundingClientRect().height) + "px");
-  }
 
   function buildTOC(){
     const headings = $allHeadings();
@@ -5811,7 +6331,13 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   function updateActive(headings){
     if (!headings.length) return;
 
-    const cursor = window.scrollY + hero.getBoundingClientRect().height + 30;
+    // Trên mobile, Hero không còn sticky nên giảm khoảng bù trừ cuộn (offset)
+    const isMobile = window.innerWidth <= 980;
+    const stickyShell = document.querySelector(".mobile-sticky-shell");
+    const heroOffset = isMobile
+      ? ((stickyShell ? stickyShell.getBoundingClientRect().height : hero.getBoundingClientRect().height) + 16)
+      : (hero.getBoundingClientRect().height + 30);
+    const cursor = window.scrollY + heroOffset;
     let current = headings[0];
 
     for (const heading of headings){
@@ -5824,7 +6350,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
       link.classList.toggle("active", link.dataset.target === current.id);
     });
 
-    mobileToc.value = current.id;
+    if (mobileToc) mobileToc.value = current.id;
   }
 
   function updateProgress(){
@@ -5835,8 +6361,8 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
   }
 
   function applyFont(){
-    const article = document.querySelector(".document-surface article");
-    if (article) article.style.fontSize = (18 * fontScale) + "px";
+    // Gán tỉ lệ vào biến CSS thay vì ép cứng 18px vào thẻ
+    root.style.setProperty("--font-scale", fontScale.toFixed(2));
     localStorage.setItem(fontKey, fontScale.toFixed(2));
   }
 
@@ -5845,35 +6371,7 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
     localStorage.setItem(themeKey, theme);
   }
 
-  /* Anti-print: browser shortcut */
-  document.addEventListener("keydown", function(e){
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p"){
-      e.preventDefault();
-      return;
-    }
 
-    if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "=")){
-      e.preventDefault();
-      fontScale = Math.min(1.28, +(fontScale + .05).toFixed(2));
-      applyFont();
-    }
-
-    if ((e.ctrlKey || e.metaKey) && e.key === "-"){
-      e.preventDefault();
-      fontScale = Math.max(.88, +(fontScale - .05).toFixed(2));
-      applyFont();
-    }
-
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "d"){
-      e.preventDefault();
-      applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
-    }
-  });
-
-  /* Anti-print: hide content in actual print preview */
-  window.addEventListener("beforeprint", function(){
-    document.body.setAttribute("data-print-blocked", "true");
-  });
 
   mobileToc.addEventListener("change", function(){
     if (!this.value) return;
@@ -5883,21 +6381,12 @@ html[data-theme="dark"] .document-surface [style*="color:#000"]{
 
   window.addEventListener("scroll", updateProgress, {passive:true});
   window.addEventListener("resize", function(){
-    syncHeroHeight();
     updateProgress();
   });
-
-  if (window.ResizeObserver){
-    new ResizeObserver(syncHeroHeight).observe(hero);
-  }
 
   applyTheme(localStorage.getItem(themeKey) || "light");
   applyFont();
   buildTOC();
-
-  requestAnimationFrame(syncHeroHeight);
-  setTimeout(syncHeroHeight, 500);
-  setTimeout(syncHeroHeight, 1500);
 
   updateProgress();
 
